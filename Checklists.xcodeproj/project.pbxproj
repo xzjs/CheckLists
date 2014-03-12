@@ -21,6 +21,7 @@
 		198F994C18CF043B00CD159C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 198F992E18CF043B00CD159C /* UIKit.framework */; };
 		198F995418CF043B00CD159C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198F995218CF043B00CD159C /* InfoPlist.strings */; };
 		198F995618CF043B00CD159C /* ChecklistsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F995518CF043B00CD159C /* ChecklistsTests.m */; };
+		19BB327018D01DEA004310C4 /* ChecklistsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 19BB326F18D01DEA004310C4 /* ChecklistsItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		198F995118CF043B00CD159C /* ChecklistsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ChecklistsTests-Info.plist"; sourceTree = "<group>"; };
 		198F995318CF043B00CD159C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		198F995518CF043B00CD159C /* ChecklistsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChecklistsTests.m; sourceTree = "<group>"; };
+		19BB326E18D01DEA004310C4 /* ChecklistsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChecklistsItem.h; sourceTree = "<group>"; };
+		19BB326F18D01DEA004310C4 /* ChecklistsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChecklistsItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,8 @@
 				198F993F18CF043B00CD159C /* ChecklistsViewController.h */,
 				198F994018CF043B00CD159C /* ChecklistsViewController.m */,
 				198F994218CF043B00CD159C /* Images.xcassets */,
+				19BB326E18D01DEA004310C4 /* ChecklistsItem.h */,
+				19BB326F18D01DEA004310C4 /* ChecklistsItem.m */,
 				198F993118CF043B00CD159C /* Supporting Files */,
 			);
 			path = Checklists;
@@ -253,6 +258,7 @@
 				198F993718CF043B00CD159C /* main.m in Sources */,
 				198F993B18CF043B00CD159C /* ChecklistsAppDelegate.m in Sources */,
 				198F994118CF043B00CD159C /* ChecklistsViewController.m in Sources */,
+				19BB327018D01DEA004310C4 /* ChecklistsItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +467,7 @@
 				198F995B18CF043B00CD159C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		198F995C18CF043B00CD159C /* Build configuration list for PBXNativeTarget "ChecklistsTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +476,7 @@
 				198F995E18CF043B00CD159C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
