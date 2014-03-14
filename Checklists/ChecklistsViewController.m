@@ -109,4 +109,12 @@
     NSArray *indexPaths=@[indexPath];
     [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
+
+-(void)addItenViewControllerDidCancel:(AddItemViewController *)controller{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)addItemVIewController:(AddItemViewController *)controller didFinishAddingItem:(ChecklistsItem *)item{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
