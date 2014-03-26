@@ -12,7 +12,8 @@
 
 @protocol AddItemViewCOntrollerDelegate <NSObject>
 -(void) addItemViewControllerDidCancel:(AddItemViewController *)controller;
--(void)addItemViewController:(AddItemViewController *)controller didFinishAddingItem:(ChecklistsItem *)item;
+-(void) addItemViewController:(AddItemViewController*)controller didFinishAddingItem:(ChecklistsItem *)item;
+-(void) addItemViewcontroller:(AddItemViewController*)controller didFinishEditingItem:(ChecklistsItem*)item;
 
 @end
 
@@ -20,6 +21,7 @@
 @property(nonatomic,weak)id<AddItemViewCOntrollerDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneBarButton;
+@property (nonatomic,strong) ChecklistsItem *itemToEdit;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;

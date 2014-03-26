@@ -27,6 +27,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if(self.itemToEdit!=nil){
+        self.title=@"EditItem";
+        self.textField.text=self.itemToEdit.text;
+        self.doneBarButton.enabled=YES;
+    }
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -46,9 +52,16 @@
 }
 
 - (IBAction)done:(id)sender {
-    ChecklistsItem *item=[[ChecklistsItem alloc]init];
-    item.text=self.textField.text;
-    item.checked=NO;
+    
+    if(self.itemToEdit==nil){
+        ChecklistsItem *item=[[ChecklistsItem alloc]init];
+        item.text=self.textField.text;
+        item.checked= NO;
+        [self.delegate addItemViewController:self didFinishAddingItem:item];
+    }else{
+        self.itemToEdit.text=self.textField.text;
+        [self.delegate addItemViewcontroller:self didFinishEditingItem:self.itemToEdit];
+    }
     
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }

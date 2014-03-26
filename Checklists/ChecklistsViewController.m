@@ -58,10 +58,11 @@
 }
 
 -(void)configureCheckmarkForCell:(UITableViewCell *)cell withCHecklistItem:(ChecklistsItem *)item{
+    UILabel *label = (UILabel *)[cell viewWithTag:1001];
     if (item.checked) {
-        cell.accessoryType=UITableViewCellAccessoryNone;
+        label.text=@"√";
     }else{
-        cell.accessoryType=UITableViewCellAccessoryCheckmark;
+        label.text=@"";
     }
 }
 
@@ -133,6 +134,23 @@
         AddItemViewController *controller = (AddItemViewController *)navigationController;
         
         controller.delegate = self;
+    }else if ([segue.identifier isEqualToString:@"EditItem"]){
+        UINavigationController *navigationController = segue.destinationViewController;
+        AddItemViewController *controller = (AddItemViewController *)navigationController.topViewController;
+        controller.delegate=self;
+        NSIndexPath * indexPath=[self.tableView indexPathForCell:sender];
+        controller.itemToEdit = _items[indexPath.row];
     }
+}
+
+-(void)addItemViewcontroller:(AddItemViewController *)controller didFinishEditingItem:(ChecklistsItem *)item{
+    NSInteger index=[_items indexOfObject:item];
+    
+    NSIndexPath *indexpPath = [NSIndexPath indexPathForRow:index inSection:0];
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexpPath];
+    
+    [self configureTextForCell:cell withChecklistItem:item];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end
