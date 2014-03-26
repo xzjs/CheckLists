@@ -65,7 +65,7 @@
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSString *newText=[textField.text stringByReplacingCharactersInRange:range withString:string];
     
-    self.doneBarButton.enabled=([newText]>0);
+    self.doneBarButton.enabled=([newText length]>0);
     
     return YES;
 }

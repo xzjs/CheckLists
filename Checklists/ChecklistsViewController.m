@@ -115,6 +115,24 @@
 }
 
 -(void)addItemVIewController:(AddItemViewController *)controller didFinishAddingItem:(ChecklistsItem *)item{
+    NSInteger newRowIndex = [_items count];
+    [_items addObject:item];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
+    
+    NSArray *indexpaths = @[indexPath];
+    [self.tableView insertRowsAtIndexPaths:indexpaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"AddItem"]){
+        UINavigationController *navigationController = segue.destinationViewController;
+        
+        AddItemViewController *controller = (AddItemViewController *)navigationController;
+        
+        controller.delegate = self;
+    }
 }
 @end
