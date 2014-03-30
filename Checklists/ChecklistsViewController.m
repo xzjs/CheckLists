@@ -22,6 +22,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    NSLog(@"文件夹的目录是%@",[self documentsDirectory]);
+    NSLog(@"数据文件的最终路径是%@",[self dataFilePath]);
+    
     _items=[[NSMutableArray alloc]initWithCapacity:20];
     ChecklistsItem *items;
     
@@ -45,6 +48,24 @@
     items.text=@"苍井空";
     items.checked=NO;
     [_items addObject:items];
+}
+
+-(NSString*)documentsDirectory{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths firstObject];
+    return documentsDirectory;
+}
+
+-(NSString*)dataFilePath{
+    return [[self documentsDirectory]stringByAppendingPathComponent:@"Checklists.plist"];
+}
+
+-(void)saveChecklistItems{
+    NSMutableData *data = [[NSMutableData alloc]init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+    [archiver encodeObject:_items forKey:@"ChecklistItems"];
+    [archiver finishEncoding];
+    [data writeToFile:[self dataFilePath] atomically:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,6 +112,9 @@
     [item toggleChecked];
     
     [self configureCheckmarkForCell:cell withCHecklistItem:item];
+    
+    [self saveChecklistItems];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -107,6 +131,9 @@
 
 -(void)tableview:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     [_items removeObjectAtIndex:indexPath.row];
+    
+    [self saveChecklistItems];
+    
     NSArray *indexPaths=@[indexPath];
     [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -123,6 +150,8 @@
     
     NSArray *indexpaths = @[indexPath];
     [self.tableView insertRowsAtIndexPaths:indexpaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [self saveChecklistItems];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -151,6 +180,9 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexpPath];
     
     [self configureTextForCell:cell withChecklistItem:item];
+    
+    [self saveChecklistItems];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end
