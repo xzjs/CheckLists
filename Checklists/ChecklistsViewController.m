@@ -111,11 +111,11 @@
     [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
--(void)addItenViewControllerDidCancel:(AddItemViewController *)controller{
+-(void)addItemViewControllerDidCancel:(AddItemViewController *)controller{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)addItemVIewController:(AddItemViewController *)controller didFinishAddingItem:(ChecklistsItem *)item{
+-(void)addItemViewController:(AddItemViewController *)controller didFinishAddingItem:(ChecklistsItem *)item{
     NSInteger newRowIndex = [_items count];
     [_items addObject:item];
     
@@ -143,7 +143,7 @@
     }
 }
 
--(void)addItemViewcontroller:(AddItemViewController *)controller didFinishEditingItem:(ChecklistsItem *)item{
+-(void)addItemViewController:(AddItemViewController *)controller didFinishEditingItem:(ChecklistsItem *)item{
     NSInteger index=[_items indexOfObject:item];
     
     NSIndexPath *indexpPath = [NSIndexPath indexPathForRow:index inSection:0];

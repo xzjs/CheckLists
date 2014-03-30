@@ -60,7 +60,7 @@
         [self.delegate addItemViewController:self didFinishAddingItem:item];
     }else{
         self.itemToEdit.text=self.textField.text;
-        [self.delegate addItemViewcontroller:self didFinishEditingItem:self.itemToEdit];
+        [self.delegate addItemViewController:self didFinishEditingItem:self.itemToEdit];
     }
     
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
