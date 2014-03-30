@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 xzjs. All rights reserved.
 //
 
-#import "itemDetailViewController.h"
+#import "ItemDetailViewController.h"
 #import "ChecklistsItem.h"
 
 @interface itemDetailViewController ()

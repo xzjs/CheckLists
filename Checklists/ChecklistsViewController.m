@@ -17,6 +17,25 @@
     NSMutableArray *_items;
 }
 
+-(void)loadChecklistItems{
+    NSString *path = [self dataFilePath];
+    if([[NSFileManager defaultManager]fileExistsAtPath:path]){
+        NSData *data = [[NSData alloc]initWithContentsOfFile:path];
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
+        _items = [unarchiver decodeObjectForKey:@"ChecklistItems"];
+        [unarchiver finishDecoding];
+    }else{
+        _items = [[NSMutableArray alloc]initWithCapacity:20];
+    }
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    if((self=[super initWithCoder:aDecoder])){
+        [self loadChecklistItems];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -24,30 +43,6 @@
     
     NSLog(@"文件夹的目录是%@",[self documentsDirectory]);
     NSLog(@"数据文件的最终路径是%@",[self dataFilePath]);
-    
-    _items=[[NSMutableArray alloc]initWithCapacity:20];
-    ChecklistsItem *items;
-    
-    items=[[ChecklistsItem alloc]init];
-    items.text=@"苍井空";
-    items.checked=NO;
-    [_items addObject:items];
-    items=[[ChecklistsItem alloc]init];
-    items.text=@"苍井空";
-    items.checked=NO;
-    [_items addObject:items];
-    items=[[ChecklistsItem alloc]init];
-    items.text=@"苍井空";
-    items.checked=NO;
-    [_items addObject:items];
-    items=[[ChecklistsItem alloc]init];
-    items.text=@"苍井空";
-    items.checked=NO;
-    [_items addObject:items];
-    items=[[ChecklistsItem alloc]init];
-    items.text=@"苍井空";
-    items.checked=NO;
-    [_items addObject:items];
 }
 
 -(NSString*)documentsDirectory{
