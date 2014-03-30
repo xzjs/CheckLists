@@ -111,11 +111,11 @@
     [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
--(void)addItemViewControllerDidCancel:(AddItemViewController *)controller{
+-(void)itemDetailViewControllerDidCancel:(itemDetailViewController *)controller{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)addItemViewController:(AddItemViewController *)controller didFinishAddingItem:(ChecklistsItem *)item{
+-(void)itemDetailViewController:(itemDetailViewController *)controller didFinishAddingItem:(ChecklistsItem *)item{
     NSInteger newRowIndex = [_items count];
     [_items addObject:item];
     
@@ -131,19 +131,19 @@
     if([segue.identifier isEqualToString:@"AddItem"]){
         UINavigationController *navigationController = segue.destinationViewController;
         
-        AddItemViewController *controller = (AddItemViewController *)navigationController;
+        itemDetailViewController *controller = (itemDetailViewController *)navigationController;
         
         controller.delegate = self;
     }else if ([segue.identifier isEqualToString:@"EditItem"]){
         UINavigationController *navigationController = segue.destinationViewController;
-        AddItemViewController *controller = (AddItemViewController *)navigationController.topViewController;
+        itemDetailViewController *controller = (itemDetailViewController *)navigationController.topViewController;
         controller.delegate=self;
         NSIndexPath * indexPath=[self.tableView indexPathForCell:sender];
         controller.itemToEdit = _items[indexPath.row];
     }
 }
 
--(void)addItemViewController:(AddItemViewController *)controller didFinishEditingItem:(ChecklistsItem *)item{
+-(void)itemDetailViewController:(itemDetailViewController *)controller didFinishEditingItem:(ChecklistsItem *)item{
     NSInteger index=[_items indexOfObject:item];
     
     NSIndexPath *indexpPath = [NSIndexPath indexPathForRow:index inSection:0];

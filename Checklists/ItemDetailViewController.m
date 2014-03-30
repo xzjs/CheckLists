@@ -1,19 +1,19 @@
 //
-//  AddItemViewController.m
+//  itemDetailViewController.m
 //  Checklists
 //
 //  Created by xzjs on 14-3-14.
 //  Copyright (c) 2014年 xzjs. All rights reserved.
 //
 
-#import "AddItemViewController.h"
+#import "itemDetailViewController.h"
 #import "ChecklistsItem.h"
 
-@interface AddItemViewController ()
+@interface itemDetailViewController ()
 
 @end
 
-@implementation AddItemViewController
+@implementation itemDetailViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -57,10 +57,10 @@
         ChecklistsItem *item=[[ChecklistsItem alloc]init];
         item.text=self.textField.text;
         item.checked= NO;
-        [self.delegate addItemViewController:self didFinishAddingItem:item];
+        [self.delegate itemDetailViewController:self didFinishAddingItem:item];
     }else{
         self.itemToEdit.text=self.textField.text;
-        [self.delegate addItemViewController:self didFinishEditingItem:self.itemToEdit];
+        [self.delegate itemDetailViewController:self didFinishEditingItem:self.itemToEdit];
     }
     
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
