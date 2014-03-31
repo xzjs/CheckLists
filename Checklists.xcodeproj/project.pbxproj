@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1964E06118E9AC44005F9E9D /* ListDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1964E06018E9AC44005F9E9D /* ListDetailViewController.m */; };
 		198F992B18CF043B00CD159C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 198F992A18CF043B00CD159C /* Foundation.framework */; };
 		198F992D18CF043B00CD159C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 198F992C18CF043B00CD159C /* CoreGraphics.framework */; };
 		198F992F18CF043B00CD159C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 198F992E18CF043B00CD159C /* UIKit.framework */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1964E05F18E9AC44005F9E9D /* ListDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListDetailViewController.h; sourceTree = "<group>"; };
+		1964E06018E9AC44005F9E9D /* ListDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListDetailViewController.m; sourceTree = "<group>"; };
 		198F992718CF043B00CD159C /* Checklists.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Checklists.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		198F992A18CF043B00CD159C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		198F992C18CF043B00CD159C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -137,6 +140,8 @@
 				198F994218CF043B00CD159C /* Images.xcassets */,
 				19CE534918D2A47E002FFBEE /* ItemDetailViewController.h */,
 				19CE534A18D2A47E002FFBEE /* ItemDetailViewController.m */,
+				1964E05F18E9AC44005F9E9D /* ListDetailViewController.h */,
+				1964E06018E9AC44005F9E9D /* ListDetailViewController.m */,
 				198F993C18CF043B00CD159C /* Main.storyboard */,
 				198F993118CF043B00CD159C /* Supporting Files */,
 			);
@@ -273,6 +278,7 @@
 				198F993718CF043B00CD159C /* main.m in Sources */,
 				198F993B18CF043B00CD159C /* ChecklistsAppDelegate.m in Sources */,
 				198F994118CF043B00CD159C /* ChecklistViewController.m in Sources */,
+				1964E06118E9AC44005F9E9D /* ListDetailViewController.m in Sources */,
 				19CE534B18D2A47E002FFBEE /* ItemDetailViewController.m in Sources */,
 				19A33A1618E99D9B003AC619 /* AllListsViewController.m in Sources */,
 				19BB327018D01DEA004310C4 /* ChecklistsItem.m in Sources */,
