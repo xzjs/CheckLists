@@ -6,14 +6,14 @@
 //  Copyright (c) 2014年 xzjs. All rights reserved.
 //
 
-#import "ChecklistsViewController.h"
+#import "ChecklistViewController.h"
 #import "ChecklistsItem.h"
 
-@interface ChecklistsViewController ()
+@interface ChecklistViewController ()
 
 @end
 
-@implementation ChecklistsViewController{
+@implementation ChecklistViewController{
     NSMutableArray *_items;
 }
 
@@ -111,17 +111,6 @@
     [self saveChecklistItems];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-- (IBAction)addItem:(id)sender {
-    NSInteger newRowIndex=[_items count];
-    ChecklistsItem *item=[[ChecklistsItem alloc]init];
-    item.text=@"我是新来的菜鸟，求照顾求虐";
-    item.checked=NO;
-    [_items addObject:item];
-    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:newRowIndex inSection:0];
-    NSArray *indexPaths=@[indexPath];
-    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 -(void)tableview:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -4,12 +4,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Checklists View Controller - Checklists-->
+        <!--Checklist View Controller - Checklists-->
         <scene sceneID="mj0-2O-fc5">
             <objects>
-                <tableViewController id="3tK-fc-qed" customClass="ChecklistsViewController" sceneMemberID="viewController">
+                <tableViewController id="3tK-fc-qed" customClass="ChecklistViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="4fy-j3-mn3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -63,7 +63,7 @@
             <objects>
                 <tableViewController id="ZVI-SU-L9M" customClass="itemDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="gAp-EX-6dg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -103,14 +103,9 @@
                                 <action selector="cancel:" destination="ZVI-SU-L9M" id="w7r-9E-kVR"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="ost-iM-UY2">
-                            <connections>
-                                <action selector="done:" destination="ZVI-SU-L9M" id="whu-jh-2fL"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="ost-iM-UY2"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="doneBarButton" destination="ost-iM-UY2" id="rh1-Zb-Gut"/>
                         <outlet property="textField" destination="Qc2-gT-7vh" id="F3K-eJ-Cvy"/>
                     </connections>
                 </tableViewController>
@@ -129,12 +124,34 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="3tK-fc-qed" kind="relationship" relationship="rootViewController" id="cRj-Sp-h8R"/>
+                        <segue destination="UAC-Rq-6QX" kind="relationship" relationship="rootViewController" id="VfU-wl-eow"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZTz-Kx-DBW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="26" y="91"/>
+            <point key="canvasLocation" x="-421" y="91"/>
+        </scene>
+        <!--All Lists View Controller - Checklists-->
+        <scene sceneID="yIF-eh-CN8">
+            <objects>
+                <tableViewController id="UAC-Rq-6QX" customClass="AllListsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="64B-EU-5OK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="UAC-Rq-6QX" id="6nV-26-PQ4"/>
+                            <outlet property="delegate" destination="UAC-Rq-6QX" id="6bl-Jo-nOG"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Checklists" id="QoY-f6-rOn"/>
+                    <connections>
+                        <segue destination="3tK-fc-qed" kind="push" identifier="ShowChecklist" id="i8J-Da-OA9"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hih-jg-pMl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-7" y="92"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="x02-VF-s0R">
@@ -158,7 +175,7 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="lRp-JL-gjB"/>
