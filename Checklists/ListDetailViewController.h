@@ -21,13 +21,13 @@
 
 @interface ListDetailViewController : UITableViewController<UITextFieldDelegate>
 
-@property(nonatomic,weak)IBOutlet UITextField *textField;
-@property(nonatomic,weak)IBOutlet UIBarButtonItem *doneBarButton;
-@property(nonatomic,weak)id <ListDetailViewControllerDelegate> delegate;
+@property (nonatomic, weak) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneBarButton;
 
-@property(nonatomic,strong)Checklist *checklistToEdit;
+@property (nonatomic, weak) id <ListDetailViewControllerDelegate> delegate;
+@property (nonatomic, strong) Checklist *checklistToEdit;
 
--(IBAction)cancel:(id)sender;
--(IBAction)done:(id)sender;
+- (IBAction)done:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end

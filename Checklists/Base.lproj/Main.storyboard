@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Checklist View Controller - Checklists-->
+        <!--Checklist View Controller - Checklist Name-->
         <scene sceneID="mj0-2O-fc5">
             <objects>
                 <tableViewController id="3tK-fc-qed" customClass="ChecklistViewController" sceneMemberID="viewController">
@@ -46,7 +46,7 @@
                             <outlet property="delegate" destination="3tK-fc-qed" id="JOs-zH-AzV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Checklists" id="h5e-G3-ded">
+                    <navigationItem key="navigationItem" title="Checklist Name" id="h5e-G3-ded">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="CLY-xX-KR5">
                             <connections>
                                 <segue destination="QOH-TW-1Kq" kind="modal" identifier="AddItem" id="qjK-Rw-Hyc"/>
@@ -111,12 +111,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kzR-7c-Azk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="101" y="-53"/>
+            <point key="canvasLocation" x="1317" y="-679"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="USn-KI-cvR">
             <objects>
-                <navigationController definesPresentationContext="YES" id="WwQ-He-y4D" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ListNavigationController" definesPresentationContext="YES" id="WwQ-He-y4D" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MaN-46-sb8">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -126,7 +126,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ngU-Ez-Oxv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-355" y="530"/>
+            <point key="canvasLocation" x="540" y="-106"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NCG-Dx-F0a">
@@ -144,7 +144,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZTz-Kx-DBW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-355" y="-667"/>
+            <point key="canvasLocation" x="-279" y="-667"/>
         </scene>
         <!--All Lists View Controller - Checklists-->
         <scene sceneID="yIF-eh-CN8">
@@ -160,7 +160,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Checklists" id="QoY-f6-rOn">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="gdw-40-TMq"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="gdw-40-TMq">
+                            <connections>
+                                <segue destination="WwQ-He-y4D" kind="modal" identifier="AddChecklist" id="YOK-4g-6Bs"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="3tK-fc-qed" kind="push" identifier="ShowChecklist" id="i8J-Da-OA9"/>
@@ -186,7 +190,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ic7-cP-sLT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-362" y="-53"/>
+            <point key="canvasLocation" x="906" y="-679"/>
         </scene>
         <!--List Detail View Controller - Add CheckList-->
         <scene sceneID="htf-em-UiX">
@@ -230,18 +234,23 @@
                     <navigationItem key="navigationItem" title="Add CheckList" id="2Ly-Iv-iSN">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="VOY-rL-gRA">
                             <connections>
-                                <action selector="cancel:" destination="826-C3-y5F" id="N9q-qI-jCS"/>
+                                <action selector="cancel:" destination="826-C3-y5F" id="QLu-po-cc5"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="fTJ-q4-4om"/>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="fTJ-q4-4om">
+                            <connections>
+                                <action selector="done:" destination="826-C3-y5F" id="lUb-di-fHK"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneBarButton" destination="fTJ-q4-4om" id="Qtt-dx-TGE"/>
                         <outlet property="textField" destination="xJx-I4-kmq" id="C0v-eJ-eI7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GLE-PR-ETH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="530"/>
+            <point key="canvasLocation" x="906" y="-94"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
