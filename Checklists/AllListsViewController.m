@@ -37,6 +37,34 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark view
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    self.navigationController.delegate = self;
+    
+    NSInteger index = [self.dataModel indexOfSelectedChecklist];
+    
+    if(index >=0 && index <[self.dataModel.lists count]){
+        
+        Checklist *checklist = self.dataModel.lists[index];
+        
+        [self performSegueWithIdentifier:@"ShowChecklist" sender:checklist];
+    }
+}
+
+#pragma mark - UINavigationController delegate
+
+-(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    
+    if(viewController ==self){
+        
+        [self.dataModel setIndexOfSelectedChecklist:-1];
+    }
+    
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -62,6 +90,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.dataModel setIndexOfSelectedChecklist:indexPath.row];
   Checklist *checklist = self.dataModel.lists[indexPath.row];
 
   [self performSegueWithIdentifier:@"ShowChecklist" sender:checklist];

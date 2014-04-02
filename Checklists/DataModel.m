@@ -10,8 +10,31 @@
 
 @implementation DataModel
 
+
+-(void)registerDefaults{
+    
+    NSDictionary *dictionary = @{@"ChecklistIndex" :@-1};
+    
+    [[NSUserDefaults standardUserDefaults]registerDefaults:dictionary];
+}
+
+#pragma mark init初始化
+
+-(id)init{
+    
+    if((self =[super init])){
+        
+        [self loadChecklists];
+        [self registerDefaults];
+    }
+    return self;
+}
+
+#pragma mark 获取沙盒地址
+
 -(NSString*)documentsDirectory{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths firstObject];
     
     return documentsDirectory;
@@ -24,7 +47,8 @@
 -(void)saveChecklists{
     NSMutableData *data = [[NSMutableData alloc]init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-    [archiver encodeObject:self.lists forKey:@"Checklists"];
+    
+    [archiver encodeObject:_lists forKey:@"Checklists"];
     [archiver finishEncoding];
     [data writeToFile:[self dataFilePath] atomically:YES];
 }
@@ -43,10 +67,17 @@
     }
 }
 
--(id)init{
-    if((self = [super init])){
-        [self loadChecklists];
-    }
-    return self;
+
+#pragma mark NSUserDefaults
+
+-(NSInteger)indexOfSelectedChecklist{
+    
+    return [[NSUserDefaults standardUserDefaults]integerForKey:@"ChecklistIndex"];
+}
+
+-(void)setIndexOfSelectedChecklist:(NSInteger)index{
+    
+    [[NSUserDefaults standardUserDefaults]setInteger:index forKey:@"ChecklistIndex"];
+    
 }
 @end
