@@ -7,6 +7,7 @@
 //
 
 #import "Checklist.h"
+#import "ChecklistItem.h"
 
 @implementation Checklist
 
@@ -34,4 +35,15 @@
     
     [aCoder encodeObject:self.items forKey:@"Items"];
 }
+
+-(int)countUncheckedItems{
+    int count = 0;
+    for(ChecklistItem *item in self.items){
+        if(!item.checked){
+            count += 1;
+        }
+    }
+    return count;
+}
+
 @end

@@ -78,12 +78,20 @@
 
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
   }
 
   Checklist *checklist = self.dataModel.lists[indexPath.row];
   cell.textLabel.text = checklist.name;
   cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Remaining",[checklist countUncheckedItems]];
+    
+    int count = [checklist countUncheckedItems];
+    if(count == 0){
+        cell.detailTextLabel.text = @"全部搞定收工";
+    }else{
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Remaining",[checklist countUncheckedItems]];
+    }
 
   return cell;
 }
@@ -157,4 +165,8 @@
   [self presentViewController:navigationController animated:YES completion:nil];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
 @end
