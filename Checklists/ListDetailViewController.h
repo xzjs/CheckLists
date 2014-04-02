@@ -12,17 +12,15 @@
 @class Checklist;
 
 @protocol ListDetailViewControllerDelegate <NSObject>
-
--(void)listDetailViewControllerDidCancel:(ListDetailViewController*)controller;
--(void)listDetailViewController:(ListDetailViewController*)controller didFinishAddingChecklist:(Checklist*)checklist;
--(void)listDetailViewController:(ListDetailViewController*)controller didFinishEditingChecklist:(Checklist*)checklist;
-
+- (void)listDetailViewControllerDidCancel:(ListDetailViewController *)controller;
+- (void)listDetailViewController:(ListDetailViewController *)controller didFinishAddingChecklist:(Checklist *)checklist;
+- (void)listDetailViewController:(ListDetailViewController *)controller didFinishEditingChecklist:(Checklist *)checklist;
 @end
 
-@interface ListDetailViewController : UITableViewController<UITextFieldDelegate>
+@interface ListDetailViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneBarButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *doneBarButton;
 
 @property (nonatomic, weak) id <ListDetailViewControllerDelegate> delegate;
 @property (nonatomic, strong) Checklist *checklistToEdit;

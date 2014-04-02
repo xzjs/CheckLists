@@ -26,18 +26,20 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    
-    if(self.checklistToEdit!=nil){
-        self.title = @"Edit Checklist";
-        self.textField.text = self.checklistToEdit.name;
-        self.doneBarButton.enabled = YES;
-    }
+  [super viewDidLoad];
+
+  if (self.checklistToEdit != nil) {
+    self.title = @"Edit Checklist";
+    self.textField.text = self.checklistToEdit.name;
+    self.doneBarButton.enabled = YES;
+  }
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self.textField becomeFirstResponder];
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+
+  [self.textField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,7 +74,5 @@
   self.doneBarButton.enabled = ([newText length] > 0);
   return YES;
 }
-
-
 
 @end

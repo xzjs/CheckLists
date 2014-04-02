@@ -1,5 +1,5 @@
 //
-//  itemDetailViewController.h
+//  AddItemViewController.h
 //  Checklists
 //
 //  Created by xzjs on 14-3-14.
@@ -7,21 +7,27 @@
 //
 
 #import <UIKit/UIKit.h>
-@class itemDetailViewController;
-@class ChecklistsItem;
+
+@class ItemDetailViewController;
+@class ChecklistItem;
 
 @protocol ItemDetailViewControllerDelegate <NSObject>
--(void) itemDetailViewControllerDidCancel:(itemDetailViewController *)controller;
--(void) itemDetailViewController:(itemDetailViewController*)controller didFinishAddingItem:(ChecklistsItem*)item;
--(void) itemDetailViewController:(itemDetailViewController*)controller didFinishEditingItem:(ChecklistsItem*)item;
+
+- (void)ItemDetailViewControllerDidCancel:(ItemDetailViewController *)controller;
+
+- (void)ItemDetailViewController:(ItemDetailViewController *)controller didFinishAddingItem:(ChecklistItem *)item;
+
+- (void)ItemDetailViewController:(ItemDetailViewController *)controller didFinishEditingItem:(ChecklistItem *)item;
 
 @end
 
-@interface itemDetailViewController : UITableViewController<UITextFieldDelegate>
-@property(nonatomic,weak)id<ItemDetailViewControllerDelegate> delegate;
+@interface ItemDetailViewController : UITableViewController <UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneBarButton;
-@property (nonatomic,strong) ChecklistsItem *itemToEdit;
+
+@property (nonatomic, weak) id <ItemDetailViewControllerDelegate> delegate;
+@property (nonatomic, strong) ChecklistItem *itemToEdit;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;

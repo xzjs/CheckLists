@@ -22,9 +22,9 @@
 		198F994C18CF043B00CD159C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 198F992E18CF043B00CD159C /* UIKit.framework */; };
 		198F995418CF043B00CD159C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198F995218CF043B00CD159C /* InfoPlist.strings */; };
 		198F995618CF043B00CD159C /* ChecklistsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F995518CF043B00CD159C /* ChecklistsTests.m */; };
+		1990F53D18EBBA7700100CBE /* ChecklistItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1990F53C18EBBA7700100CBE /* ChecklistItem.m */; };
 		19A33A1318E98D0A003AC619 /* Checklist.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A33A1218E98D0A003AC619 /* Checklist.m */; };
 		19A33A1618E99D9B003AC619 /* AllListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A33A1518E99D9B003AC619 /* AllListsViewController.m */; };
-		19BB327018D01DEA004310C4 /* ChecklistsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 19BB326F18D01DEA004310C4 /* ChecklistsItem.m */; };
 		19CE534B18D2A47E002FFBEE /* ItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CE534A18D2A47E002FFBEE /* ItemDetailViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -60,12 +60,12 @@
 		198F995118CF043B00CD159C /* ChecklistsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ChecklistsTests-Info.plist"; sourceTree = "<group>"; };
 		198F995318CF043B00CD159C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		198F995518CF043B00CD159C /* ChecklistsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChecklistsTests.m; sourceTree = "<group>"; };
+		1990F53B18EBBA7000100CBE /* ChecklistItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChecklistItem.h; sourceTree = "<group>"; };
+		1990F53C18EBBA7700100CBE /* ChecklistItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChecklistItem.m; sourceTree = "<group>"; };
 		19A33A1118E98D0A003AC619 /* Checklist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Checklist.h; sourceTree = "<group>"; };
 		19A33A1218E98D0A003AC619 /* Checklist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Checklist.m; sourceTree = "<group>"; };
 		19A33A1418E99D9B003AC619 /* AllListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllListsViewController.h; sourceTree = "<group>"; };
 		19A33A1518E99D9B003AC619 /* AllListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllListsViewController.m; sourceTree = "<group>"; };
-		19BB326E18D01DEA004310C4 /* ChecklistsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChecklistsItem.h; sourceTree = "<group>"; };
-		19BB326F18D01DEA004310C4 /* ChecklistsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChecklistsItem.m; sourceTree = "<group>"; };
 		19CE534918D2A47E002FFBEE /* ItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetailViewController.h; sourceTree = "<group>"; };
 		19CE534A18D2A47E002FFBEE /* ItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,14 +127,14 @@
 		198F993018CF043B00CD159C /* Checklists */ = {
 			isa = PBXGroup;
 			children = (
+				1990F53C18EBBA7700100CBE /* ChecklistItem.m */,
+				1990F53B18EBBA7000100CBE /* ChecklistItem.h */,
 				19A33A1418E99D9B003AC619 /* AllListsViewController.h */,
 				19A33A1518E99D9B003AC619 /* AllListsViewController.m */,
 				19A33A1118E98D0A003AC619 /* Checklist.h */,
 				19A33A1218E98D0A003AC619 /* Checklist.m */,
 				198F993918CF043B00CD159C /* ChecklistsAppDelegate.h */,
 				198F993A18CF043B00CD159C /* ChecklistsAppDelegate.m */,
-				19BB326E18D01DEA004310C4 /* ChecklistsItem.h */,
-				19BB326F18D01DEA004310C4 /* ChecklistsItem.m */,
 				198F993F18CF043B00CD159C /* ChecklistViewController.h */,
 				198F994018CF043B00CD159C /* ChecklistViewController.m */,
 				198F994218CF043B00CD159C /* Images.xcassets */,
@@ -278,10 +278,10 @@
 				198F993718CF043B00CD159C /* main.m in Sources */,
 				198F993B18CF043B00CD159C /* ChecklistsAppDelegate.m in Sources */,
 				198F994118CF043B00CD159C /* ChecklistViewController.m in Sources */,
+				1990F53D18EBBA7700100CBE /* ChecklistItem.m in Sources */,
 				1964E06118E9AC44005F9E9D /* ListDetailViewController.m in Sources */,
 				19CE534B18D2A47E002FFBEE /* ItemDetailViewController.m in Sources */,
 				19A33A1618E99D9B003AC619 /* AllListsViewController.m in Sources */,
-				19BB327018D01DEA004310C4 /* ChecklistsItem.m in Sources */,
 				19A33A1318E98D0A003AC619 /* Checklist.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

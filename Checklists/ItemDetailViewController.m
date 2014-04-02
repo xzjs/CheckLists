@@ -1,5 +1,5 @@
 //
-//  itemDetailViewController.m
+//  AddItemViewController.m
 //  Checklists
 //
 //  Created by xzjs on 14-3-14.
@@ -7,13 +7,13 @@
 //
 
 #import "ItemDetailViewController.h"
-#import "ChecklistsItem.h"
+#import "ChecklistItem.h"
 
-@interface itemDetailViewController ()
+@interface ItemDetailViewController ()
 
 @end
 
-@implementation itemDetailViewController
+@implementation ItemDetailViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -26,19 +26,20 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    
-    if(self.itemToEdit!=nil){
-        self.title=@"EditItem";
-        self.textField.text=self.itemToEdit.text;
-        self.doneBarButton.enabled=YES;
-    }
+  [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  if (self.itemToEdit != nil) {
+    self.title = @"Edit Item";
+    self.textField.text = self.itemToEdit.text;
+    self.doneBarButton.enabled = YES;
+  }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+
+  [self.textField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,38 +49,35 @@
 }
 
 - (IBAction)cancel:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate ItemDetailViewControllerDidCancel:self];
 }
 
 - (IBAction)done:(id)sender {
     
-    if(self.itemToEdit==nil){
-        ChecklistsItem *item=[[ChecklistsItem alloc]init];
-        item.text=self.textField.text;
+    if(self.itemToEdit == nil){
+        ChecklistItem *item=[[ChecklistItem alloc]init];
+        item.text = self.textField.text;
         item.checked= NO;
-        [self.delegate itemDetailViewController:self didFinishAddingItem:item];
-    }else{
-        self.itemToEdit.text=self.textField.text;
-        [self.delegate itemDetailViewController:self didFinishEditingItem:self.itemToEdit];
+        [self.delegate ItemDetailViewController:self didFinishAddingItem:item];
+    } else{
+        self.itemToEdit.text = self.textField.text;
+        [self.delegate ItemDetailViewController:self didFinishEditingItem:self.itemToEdit];
     }
     
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
--(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    return nil;
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  return nil;
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self.textField becomeFirstResponder];
+- (BOOL)textField:(UITextField *)theTextField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+  NSString *newText = [theTextField.text stringByReplacingCharactersInRange:range withString:string];
+
+  self.doneBarButton.enabled = ([newText length] > 0);
+	
+  return YES;
 }
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    NSString *newText=[textField.text stringByReplacingCharactersInRange:range withString:string];
-    
-    self.doneBarButton.enabled=([newText length]>0);
-    
-    return YES;
-}
 @end

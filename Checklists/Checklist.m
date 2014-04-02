@@ -18,15 +18,20 @@
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder{
-    if(self = [super init]){
+    
+    if((self =[super init])){
         self.name = [aDecoder decodeObjectForKey:@"Name"];
-        self.name = [aDecoder decodeObjectForKey:@"Items"];
+        self.items = [aDecoder decodeObjectForKey:@"Items"];
+        
     }
     return self;
 }
 
--(void)encodeWithCOder:(NSCoder *)aCoder{
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    
+    
     [aCoder encodeObject:self.name forKey:@"Name"];
-    [aCoder encodeObject:self.name forKey:@"Items"];
+    
+    [aCoder encodeObject:self.items forKey:@"Items"];
 }
 @end
