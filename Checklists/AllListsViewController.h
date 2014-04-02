@@ -11,4 +11,6 @@
 
 @interface AllListsViewController : UITableViewController<ListDetailViewControllerDelegate>
 
+-(void)saveChecklists;
+
 @end
