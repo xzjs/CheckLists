@@ -47,6 +47,8 @@
   } else {
     label.text = @"";
   }
+    
+    label.textColor = self.view.tintColor;
 }
 
 - (void)configureTextForCell:(UITableViewCell *)cell withChecklistItem:(ChecklistItem *)item

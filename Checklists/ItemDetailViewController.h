@@ -13,11 +13,11 @@
 
 @protocol ItemDetailViewControllerDelegate <NSObject>
 
-- (void)ItemDetailViewControllerDidCancel:(ItemDetailViewController *)controller;
+- (void)itemDetailViewControllerDidCancel:(ItemDetailViewController *)controller;
 
-- (void)ItemDetailViewController:(ItemDetailViewController *)controller didFinishAddingItem:(ChecklistItem *)item;
+- (void)itemDetailViewController:(ItemDetailViewController *)controller didFinishAddingItem:(ChecklistItem *)item;
 
-- (void)ItemDetailViewController:(ItemDetailViewController *)controller didFinishEditingItem:(ChecklistItem *)item;
+- (void)itemDetailViewController:(ItemDetailViewController *)controller didFinishEditingItem:(ChecklistItem *)item;
 
 @end
 
