@@ -79,6 +79,8 @@
     item.checked = NO;
     item.shouldRemind = self.switchControl.on;
     item.dueDate = _dueDate;
+      
+      [item scheduleNotification];
 
     [self.delegate itemDetailViewController:self didFinishAddingItem:item];
 
@@ -86,6 +88,8 @@
     self.itemToEdit.text = self.textField.text;
     self.itemToEdit.shouldRemind = self.switchControl.on;
     self.itemToEdit.dueDate = _dueDate;
+      
+      [self.itemToEdit scheduleNotification];
     [self.delegate itemDetailViewController:self didFinishEditingItem:self.itemToEdit];
   }
 }

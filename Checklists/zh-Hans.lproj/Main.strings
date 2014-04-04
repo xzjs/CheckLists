@@ -1,0 +1,42 @@
+
+/* Class = "IBUINavigationItem"; title = "Add CheckList"; ObjectID = "2Ly-Iv-iSN"; */
+"2Ly-Iv-iSN.title" = "Add CheckList";
+
+/* Class = "IBUILabel"; text = "Detail"; ObjectID = "CPn-qO-bmD"; */
+"CPn-qO-bmD.text" = "Detail";
+
+/* Class = "IBUILabel"; text = "Icon"; ObjectID = "JYM-zA-5B4"; */
+"JYM-zA-5B4.text" = "Icon";
+
+/* Class = "IBUILabel"; text = "√"; ObjectID = "KjQ-RO-vbr"; */
+"KjQ-RO-vbr.text" = "√";
+
+/* Class = "IBUITextField"; placeholder = "Name of the Item"; ObjectID = "Qc2-gT-7vh"; */
+"Qc2-gT-7vh.placeholder" = "Name of the Item";
+
+/* Class = "IBUINavigationItem"; title = "Checklists"; ObjectID = "QoY-f6-rOn"; */
+"QoY-f6-rOn.title" = "Checklists";
+
+/* Class = "IBUILabel"; text = "Checklist Item"; ObjectID = "SgC-RB-tTf"; */
+"SgC-RB-tTf.text" = "Checklist Item";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "Vuz-Rl-szK"; */
+"Vuz-Rl-szK.text" = "Title";
+
+/* Class = "IBUINavigationItem"; title = "AddItem"; ObjectID = "YKg-Cc-FaW"; */
+"YKg-Cc-FaW.title" = "AddItem";
+
+/* Class = "IBUINavigationItem"; title = "Checklist Name"; ObjectID = "h5e-G3-ded"; */
+"h5e-G3-ded.title" = "Checklist Name";
+
+/* Class = "IBUILabel"; text = "提醒我"; ObjectID = "hCR-mN-Sfy"; */
+"hCR-mN-Sfy.text" = "提醒我";
+
+/* Class = "IBUINavigationItem"; title = "Choose Icon"; ObjectID = "n0D-me-GJl"; */
+"n0D-me-GJl.title" = "Choose Icon";
+
+/* Class = "IBUILabel"; text = "截止日期"; ObjectID = "wP5-cy-6Kg"; */
+"wP5-cy-6Kg.text" = "截止日期";
+
+/* Class = "IBUITextField"; placeholder = "Name of the Item"; ObjectID = "xJx-I4-kmq"; */
+"xJx-I4-kmq.placeholder" = "Name of the Item";
