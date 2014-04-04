@@ -54,7 +54,8 @@
 - (void)configureTextForCell:(UITableViewCell *)cell withChecklistItem:(ChecklistItem *)item
 {
   UILabel *label = (UILabel *)[cell viewWithTag:1000];
-  label.text = item.text;
+  //label.text = item.text;
+    label.text = [NSString stringWithFormat:@"%ld:%@",(long)item.itemId,item.text];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -99,12 +100,12 @@
 
 #pragma mark delegate
 
-- (void)ItemDetailViewControllerDidCancel:(ItemDetailViewController *)controller
+- (void)itemDetailViewControllerDidCancel:(ItemDetailViewController *)controller
 {
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)ItemDetailViewController:(ItemDetailViewController *)controller didFinishAddingItem:(ChecklistItem *)item
+- (void)itemDetailViewController:(ItemDetailViewController *)controller didFinishAddingItem:(ChecklistItem *)item
 {
 //  NSInteger newRowIndex = [_items count];
     NSInteger newRowIndex = [self.checklist.items count];
@@ -120,7 +121,7 @@
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)ItemDetailViewController:(ItemDetailViewController *)controller didFinishEditingItem:(ChecklistItem *)item
+- (void)itemDetailViewController:(ItemDetailViewController *)controller didFinishEditingItem:(ChecklistItem *)item
 {
 //  NSInteger index = [_items indexOfObject:item];
     NSInteger index = [self.checklist.items indexOfObject:item];
