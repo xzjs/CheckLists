@@ -8,6 +8,7 @@
 
 #import "ListDetailViewController.h"
 #import "Checklist.h"
+#import "DataModel.h"
 
 @interface ListDetailViewController ()
 
@@ -30,21 +31,15 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-
-  if (self.checklistToEdit != nil) {
-    self.title = @"Edit Checklist";
-    self.textField.text = self.checklistToEdit.name;
-    self.doneBarButton.enabled = YES;
-      _iconName = self.checklistToEdit.iconName;
-  }
-    self.iconImageView.image = [UIImage imageNamed:_iconName];
+    
+    self.nsa=[DataModel loadChecklistOnInternet];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-
-  [self.textField becomeFirstResponder];
+    
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,12 +51,10 @@
 - (IBAction)done:(id)sender {
     if(self.checklistToEdit == nil){
         Checklist *checklist = [[Checklist alloc]init];
-        checklist.name = self.textField.text;
-        checklist.iconName = _iconName;
+            checklist.iconName = _iconName;
         
         [self.delegate listDetailViewController:self didFinishAddingChecklist:checklist];
     }else{
-        self.checklistToEdit.name = self.textField.text;
         self.checklistToEdit.iconName = _iconName;
         [self.delegate listDetailViewController:self didFinishEditingChecklist:self.checklistToEdit];
     }
@@ -102,11 +95,29 @@
     
     _iconName = iconName;
     
-    self.iconImageView.image = [UIImage imageNamed:_iconName];
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    
+    //Checklist *checklist = self.dataModel.lists[indexPath.row];
+    //cell.textLabel.text = checklist.name;
+    cell.textLabel.text = self.nsa[indexPath.row];
+    
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.nsa count];
+}
 
 
 @end

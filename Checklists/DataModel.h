@@ -17,5 +17,6 @@
 -(void)setIndexOfSelectedChecklist:(NSInteger)index;
 -(void)sortChecklists;
 +(NSInteger)nextChecklistItemId;
++(NSArray*)loadChecklistOnInternet;
 
 @end

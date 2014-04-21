@@ -119,4 +119,23 @@
     return itemId;
 }
 
++(NSArray *)loadChecklistOnInternet{
+    NSError *error;
+    //加载一个NSURL对象
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://oucfeed.duapp.com/category"]];
+    //将请求的url数据放到NSData对象中
+    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    //IOS5自带解析类NSJSONSerialization从response中解析出数据放到字典中
+    NSDictionary *weatherDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
+    
+    NSArray *key0 = weatherDic.allKeys;
+    
+    return weatherDic.allKeys;
+}
+
+-(NSArray *)getListArray:(NSDictionary *)nsdic{
+    for (NSDictionary *object in nsdic) {
+        
+    }
+}
 @end
