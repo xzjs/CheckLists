@@ -20,6 +20,8 @@
     for(ChecklistItem *item in self.items){
         if(!item.checked){
             count+=1;
+            
+            
         }
     }
     return count;
