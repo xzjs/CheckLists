@@ -9,21 +9,22 @@
 #import "ListDetailViewController.h"
 #import "Checklist.h"
 #import "DataModel.h"
+#import "DataModelTree.h"
 
 @interface ListDetailViewController ()
 
+@property (strong, nonatomic) NSArray *data;
+@property(strong,nonatomic) NSMutableArray *prevData;
+
 @end
 
-@implementation ListDetailViewController{
-    
-    NSString *_iconName;
-}
+@implementation ListDetailViewController
 
 -(id)initWithCoder:(NSCoder *)aDecoder{
     
     if((self = [super initWithCoder:aDecoder])){
         
-        _iconName = @"Folder";
+        //_iconName = @"Folder";
     }
     return self;
 }
@@ -31,8 +32,7 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-    
-    self.nsa=[DataModel loadChecklistOnInternet];
+    self.data = [DataModel loadChecklistOnInternet];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -51,17 +51,21 @@
 - (IBAction)done:(id)sender {
     if(self.checklistToEdit == nil){
         Checklist *checklist = [[Checklist alloc]init];
-            checklist.iconName = _iconName;
+            //checklist.iconName = _iconName;
         
         [self.delegate listDetailViewController:self didFinishAddingChecklist:checklist];
     }else{
-        self.checklistToEdit.iconName = _iconName;
+        //self.checklistToEdit.iconName = _iconName;
         [self.delegate listDetailViewController:self didFinishEditingChecklist:self.checklistToEdit];
     }
 }
 
 - (IBAction)cancel:(id)sender {
-    [self.delegate listDetailViewControllerDidCancel:self];
+    if([self.prevData count]==0){
+        [self.delegate listDetailViewControllerDidCancel:self];
+    }else{
+        [self.prevData removeObject:self.prevData.lastObject];
+    }
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -93,31 +97,60 @@
 -(void)iconPicker:(IconPickerViewController *)picker didPickIcon:(NSString *)iconName{
     
     
-    _iconName = iconName;
+    //_iconName = iconName;
     
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ClassListCell"];
+    
+    //  ChecklistItem *item = _items[indexPath.row];
+    DataModelTree *item = self.data[indexPath.row];
+    
+    
+    [self configureTextForCell:cell withChecklistItem:item];
+    [self configureCheckmarkForCell:cell withChecklistItem:item];
+	
+    return cell;
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    
-    //Checklist *checklist = self.dataModel.lists[indexPath.row];
-    //cell.textLabel.text = checklist.name;
-    cell.textLabel.text = self.nsa[indexPath.row];
+    cell.textLabel.text = [(DataModelTree *)self.data[indexPath.row] name];
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.nsa count];
+    return [self.data count];
 }
 
+- (void)configureCheckmarkForCell:(UITableViewCell *)cell withChecklistItem:(DataModelTree *)item
+{
+    cell.accessoryType=UITableViewCellAccessoryCheckmark;
+    
+    UILabel *label = (UILabel *)[cell viewWithTag:1001];
+    
+    if (item.checked) {
+        label.text = @"√";
+    } else {
+        label.text = @"";
+    }
+    
+    label.textColor = self.view.tintColor;
+}
+
+- (void)configureTextForCell:(UITableViewCell *)cell withChecklistItem:(DataModelTree *)item
+{
+    UILabel *label = (UILabel *)[cell viewWithTag:500];
+    //label.text = item.text;
+    label.text = item.name;
+}
 
 @end

@@ -16,10 +16,6 @@
 
 @implementation ChecklistViewController
 
-
-
-
-
 - (void)viewDidLoad
 {
   [super viewDidLoad];

@@ -23,7 +23,7 @@
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *doneBarButton;
 
-@property (nonatomic, weak) id <ListDetailViewControllerDelegate> delegate;
+@property (nonatomic, strong) id <ListDetailViewControllerDelegate> delegate;
 @property (nonatomic, strong) Checklist *checklistToEdit;
 @property(nonatomic,strong)NSArray *nsa;
 

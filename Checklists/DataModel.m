@@ -7,6 +7,7 @@
 //
 
 #import "DataModel.h"
+#import "DataModelTree.h"
 #import "Checklist.h"
 
 @implementation DataModel
@@ -119,7 +120,7 @@
     return itemId;
 }
 
-+(NSArray *)loadChecklistOnInternet{
++(NSMutableArray *)loadChecklistOnInternet{
     NSError *error;
     //加载一个NSURL对象
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://oucfeed.duapp.com/category"]];
@@ -128,14 +129,24 @@
     //IOS5自带解析类NSJSONSerialization从response中解析出数据放到字典中
     NSDictionary *weatherDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
     
-    NSArray *key0 = weatherDic.allKeys;
+    NSMutableArray * mtemp=[self getListArray:weatherDic];
     
-    return weatherDic.allKeys;
+    return mtemp;
 }
 
--(NSArray *)getListArray:(NSDictionary *)nsdic{
-    for (NSDictionary *object in nsdic) {
-        
++(NSMutableArray *)getListArray:(NSDictionary *)nsdic{
+    NSArray * kellAll=nsdic.allKeys;
+    NSMutableArray * maChild=[[NSMutableArray alloc]init];
+    for (NSString *jsonkey in kellAll) {
+        NSDictionary * nsd=[nsdic objectForKey:jsonkey];
+        NSMutableArray * ma=[[NSMutableArray alloc]init];
+        if([nsd count]!=0){
+            ma=[self getListArray:nsd];
+        }
+        DataModelTree *phone1 = [DataModelTree dataObjectWithName:jsonkey children:ma];
+        [maChild addObject:phone1];
     }
+    return maChild;
 }
+
 @end

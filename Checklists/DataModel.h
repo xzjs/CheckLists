@@ -18,5 +18,6 @@
 -(void)sortChecklists;
 +(NSInteger)nextChecklistItemId;
 +(NSArray*)loadChecklistOnInternet;
++(NSMutableArray *)getListArray:(NSDictionary *)nsdic;
 
 @end
