@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSArray *children;
+@property (assign,nonatomic)BOOL checked;
 
 - (id)initWithName:(NSString *)name children:(NSArray *)array;
 

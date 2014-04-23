@@ -13,7 +13,7 @@
 
 @interface ListDetailViewController ()
 
-@property (strong, nonatomic) NSArray *data;
+@property (strong, nonatomic) DataModelTree *data;
 @property(strong,nonatomic) NSMutableArray *prevData;
 
 @end
@@ -32,14 +32,12 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-    self.data = [DataModel loadChecklistOnInternet];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-  [super viewWillAppear:animated];
+    if ((self.prevData==nil)||([self.prevData count]==0)) {
+        self.data.name=@"全部分类";
+        self.data.children = [DataModel loadChecklistOnInternet];
+    }
+    self.title=self.data.name;
     
-    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -107,43 +105,27 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ClassListCell"];
     
     //  ChecklistItem *item = _items[indexPath.row];
-    DataModelTree *item = self.data[indexPath.row];
+    DataModelTree *item = self.data.children[indexPath.row];
     
     
     [self configureTextForCell:cell withChecklistItem:item];
     [self configureCheckmarkForCell:cell withChecklistItem:item];
 	
     return cell;
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }
-    cell.textLabel.text = [(DataModelTree *)self.data[indexPath.row] name];
-    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-    
-    return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.data count];
+    return [self.data.children count];
 }
 
 - (void)configureCheckmarkForCell:(UITableViewCell *)cell withChecklistItem:(DataModelTree *)item
 {
-    cell.accessoryType=UITableViewCellAccessoryCheckmark;
-    
-    UILabel *label = (UILabel *)[cell viewWithTag:1001];
-    
     if (item.checked) {
-        label.text = @"√";
+        cell.accessoryType=UITableViewCellAccessoryCheckmark;
     } else {
-        label.text = @"";
+        cell.accessoryType=UITableViewCellAccessoryNone;
     }
-    
-    label.textColor = self.view.tintColor;
 }
 
 - (void)configureTextForCell:(UITableViewCell *)cell withChecklistItem:(DataModelTree *)item
@@ -151,6 +133,22 @@
     UILabel *label = (UILabel *)[cell viewWithTag:500];
     //label.text = item.text;
     label.text = item.name;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    //  ChecklistItem *item = _items[indexPath.row];
+    DataModelTree *item = self.data.children[indexPath.row];
+    
+    [self.prevData addObject:self.data];
+    self.data=item;
+    
+    //  [self saveChecklistItems];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView reloadData];
 }
 
 @end
