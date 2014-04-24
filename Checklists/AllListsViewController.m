@@ -11,8 +11,13 @@
 #import "ChecklistViewController.h"
 #import "DataModel.h"
 #import "ChecklistItem.h"
+#import "Reachability.h"
 
 @interface AllListsViewController ()
+
+@property(strong,nonatomic)NSMutableDictionary *newsMDic;
+@property(strong,nonatomic)NSArray *nsakey;
+@property(strong,nonatomic)NSMutableArray *nsmaObject;
 
 @end
 
@@ -24,6 +29,17 @@
 {
     [super viewDidLoad];
 
+    NSString *hostName=@"http://oucfeed.duapp.com/category";
+    Reachability * rea=[Reachability reachabilityWithHostName:hostName];
+    NetworkStatus nws=[rea currentReachabilityStatus];
+    if (nws==NotReachable) {
+        DataModel *dm=[[DataModel alloc]init];
+        self.nsmaObject=[dm loadNews];
+    }else{
+        [self loadNews];
+        DataModel *dm=[[DataModel alloc]init];
+        [dm saveNews:self.nsmaObject];
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -69,7 +85,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [self.dataModel.lists count];
+  //return [self.dataModel.lists count];
+    return [self.newsMDic count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -80,32 +97,17 @@
   if (cell == nil) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
   }
-
-  Checklist *checklist = self.dataModel.lists[indexPath.row];
-  cell.textLabel.text = checklist.name;
-  cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Remaining",[checklist countUncheckedItems]];
-    
-    int count = [checklist countUncheckedItems];
-    if ([checklist.items count]==0) {
-        cell.detailTextLabel.text = @"No Items";
-    }else if(count == 0){
-        cell.detailTextLabel.text = @"全部搞定收工";
-    }else{
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Remaining",[checklist countUncheckedItems]];
-    }
-    
-    cell.imageView.image = [UIImage imageNamed:checklist.iconName];
-
+    NSDictionary *nsdObject=[self.nsmaObject objectAtIndex:indexPath.row];
+    cell.textLabel.text = nsdObject[@"title"];
+    cell.detailTextLabel.text = [NSString stringWithFormat:[NSString stringWithFormat:nsdObject[@"datetime"]]];
   return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.dataModel setIndexOfSelectedChecklist:indexPath.row];
-  Checklist *checklist = self.dataModel.lists[indexPath.row];
+    NSDictionary *nsdObject=[self.nsmaObject objectAtIndex:indexPath.row];
 
-  [self performSegueWithIdentifier:@"ShowChecklist" sender:checklist];
+    [self performSegueWithIdentifier:@"ShowChecklist" sender:nsdObject];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -120,7 +122,7 @@
 {
   if ([segue.identifier isEqualToString:@"ShowChecklist"]) {
     ChecklistViewController *controller = segue.destinationViewController;
-    controller.checklist = sender;
+    controller.nsd = sender;
   } else if ([segue.identifier isEqualToString:@"AddChecklist"]) {
     UINavigationController *navigationController = segue.destinationViewController;
     ListDetailViewController *controller = (ListDetailViewController *)navigationController.topViewController;
@@ -166,6 +168,18 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
+
+-(void)loadNews{
+    self.newsMDic=[[NSMutableDictionary alloc]init];
+    DataModel *dm=[[DataModel alloc]init];
+    self.newsMDic=[dm getNewsOnInternet:dm.loadIDNumber];
+    self.nsmaObject=[[NSMutableArray alloc]init];
+    for (NSDictionary *nsd in self.newsMDic) {
+        [self.nsmaObject addObject:nsd];
+    }
+    //self.nsa=[self.newsMDic allKeys];
     [self.tableView reloadData];
 }
 @end

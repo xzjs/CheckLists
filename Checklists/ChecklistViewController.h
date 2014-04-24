@@ -13,6 +13,8 @@
 
 @interface ChecklistViewController : UITableViewController <ItemDetailViewControllerDelegate>
 
-@property (nonatomic, strong) Checklist *checklist;
+//@property (nonatomic, strong) Checklist *checklist;
+@property(nonatomic,strong)NSDictionary * nsd;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end

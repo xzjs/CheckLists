@@ -19,7 +19,7 @@
 - (void)listDetailViewController:(ListDetailViewController *)controller didFinishEditingChecklist:(Checklist *)checklist;
 @end
 
-@interface ListDetailViewController : UITableViewController<UITextFieldDelegate,IconPickerViewControllerDelegate>
+@interface ListDetailViewController : UITableViewController<UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *doneBarButton;
 

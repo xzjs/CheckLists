@@ -10,11 +10,14 @@
 #import "Checklist.h"
 #import "DataModel.h"
 #import "DataModelTree.h"
+#import "Reachability.h"
 
 @interface ListDetailViewController ()
 
 @property (strong, nonatomic) DataModelTree *data;
 @property(strong,nonatomic) NSMutableArray *prevData;
+@property(strong,nonatomic)NSMutableString * sJosn;
+@property(assign,nonatomic)BOOL isSelected;
 
 @end
 
@@ -32,7 +35,19 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+    NSString *hostName=@"http://oucfeed.duapp.com/category";
+    Reachability * rea=[Reachability reachabilityWithHostName:hostName];
+    NetworkStatus nws=[rea currentReachabilityStatus];
+    if (nws==NotReachable) {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"网络不可用" message:@"当前网络不可用，无法加载列表" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:nil ,nil];
+        [alert show];
+        id someThing;
+        [self cancel:someThing];
+        return ;
+    }
     if ((self.prevData==nil)||([self.prevData count]==0)) {
+        self.prevData=[[NSMutableArray alloc]init];
+        self.data=[[DataModelTree alloc]init];
         self.data.name=@"全部分类";
         self.data.children = [DataModel loadChecklistOnInternet];
     }
@@ -46,58 +61,90 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)done:(id)sender {
-    if(self.checklistToEdit == nil){
-        Checklist *checklist = [[Checklist alloc]init];
-            //checklist.iconName = _iconName;
-        
-        [self.delegate listDetailViewController:self didFinishAddingChecklist:checklist];
-    }else{
-        //self.checklistToEdit.iconName = _iconName;
-        [self.delegate listDetailViewController:self didFinishEditingChecklist:self.checklistToEdit];
+- (IBAction)done:(id)sender{
+    while ([self.prevData count]!=0) {
+        id dontKnow;
+        [self cancel:dontKnow];
     }
+    DataModelTree *dmtNew=[[DataModelTree alloc]init];
+    dmtNew=self.data;
+    dmtNew.checked=1;
+    self.sJosn=[[NSMutableString alloc]init];
+    [self getJsonString:dmtNew];
+    NSRange range=NSMakeRange([self.sJosn length]-1, 1);
+    [self.sJosn deleteCharactersInRange:range];
+    range=NSMakeRange(0, 3);
+    [self.sJosn deleteCharactersInRange:range];
+    
+    NSMutableDictionary *nmDic=[self postMessageAndGetNsMutableDictionary:@"http://oucfeed.duapp.com/profile" type:@"POST" body:self.sJosn];
+    NSString *ns=[nmDic objectForKey:@"id"];
+    
+    DataModel *dm=[[DataModel alloc]init];
+    [dm saveIDNumber:ns];
 }
 
-- (IBAction)cancel:(id)sender {
+//向服务器发送请求从网络获取数据并返回获取到得字典
+-(NSMutableDictionary *)postMessageAndGetNsMutableDictionary:(NSString*)u type:(NSString*)t body:(NSString*)b{
+    NSURL *url=[NSURL URLWithString:u];
+    
+    NSMutableURLRequest *mRequest=[[NSMutableURLRequest alloc]init];
+    [mRequest setURL:url];
+    [mRequest setTimeoutInterval:10];
+    [mRequest setHTTPMethod:t];
+    //[mRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [mRequest setValue:@"application/json"forHTTPHeaderField:@"Content-Type"];
+    [mRequest setHTTPBody:[b dataUsingEncoding:NSUTF8StringEncoding]];
+    NSURLResponse *response;
+    NSError *error;
+    NSData *data=[NSURLConnection sendSynchronousRequest:mRequest returningResponse:&response error:&error];
+    //NSString *content=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSMutableDictionary *idDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
+    return idDic;
+}
+
+
+//通过递归判断选择了哪些拼接出json字符串
+-(void)getJsonString:(DataModelTree *)dmt{
+    if(dmt.checked>0||dmt.checked==-1){
+        NSString * nss;
+        if([dmt.name isEqual:@"全部分类"]){
+            nss=@"";
+        }else{
+            nss=dmt.name;
+        }
+        [self.sJosn appendString:[NSString stringWithFormat:@"\"%@\":{",nss]];
+        if([dmt.children count]!=0&&dmt.checked!=-1){
+            for (DataModelTree *object in dmt.children) {
+                [self getJsonString:object];
+            }
+        }
+        if([self.sJosn hasSuffix:@","]){
+            NSRange range=NSMakeRange([self.sJosn length]-1, 1);
+            [self.sJosn deleteCharactersInRange:range];
+        }
+        [self.sJosn appendString:@"},"];
+    }
+    
+}
+
+- (IBAction)cancel:(id)sender{
     if([self.prevData count]==0){
         [self.delegate listDetailViewControllerDidCancel:self];
     }else{
+        
+        int i=0;
+        for (DataModelTree *object in self.data.children) {
+            if(object.checked>0||object.checked==-1){
+                i++;
+            }
+        }
+        self.data.checked=i;
+        self.data=self.prevData.lastObject;
+        
+        self.title=self.data.name;
         [self.prevData removeObject:self.prevData.lastObject];
+        [self.tableView reloadData];
     }
-}
-
--(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == 1){
-        return indexPath;
-    }else{
-        return nil;
-    }
-}
-
-- (BOOL)textField:(UITextField *)theTextField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-  NSString *newText = [theTextField.text stringByReplacingCharactersInRange:range withString:string];
-  self.doneBarButton.enabled = ([newText length] > 0);
-  return YES;
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
-    
-    if([segue.identifier isEqualToString:@"PickIcon"]){
-        
-        IconPickerViewController *controller = segue.destinationViewController;
-        
-        controller.delegate = self;
-    }
-}
-
--(void)iconPicker:(IconPickerViewController *)picker didPickIcon:(NSString *)iconName{
-    
-    
-    //_iconName = iconName;
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -121,10 +168,15 @@
 
 - (void)configureCheckmarkForCell:(UITableViewCell *)cell withChecklistItem:(DataModelTree *)item
 {
-    if (item.checked) {
+    if (item.checked==-1) {
         cell.accessoryType=UITableViewCellAccessoryCheckmark;
-    } else {
-        cell.accessoryType=UITableViewCellAccessoryNone;
+    }else{
+        if ([item.children count]!=0) {
+            cell.accessoryType=UITableViewCellAccessoryDetailDisclosureButton;
+        }else{
+            cell.accessoryType=UITableViewCellAccessoryNone;
+        }
+        
     }
 }
 
@@ -137,18 +189,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    //  ChecklistItem *item = _items[indexPath.row];
-    DataModelTree *item = self.data.children[indexPath.row];
-    
-    [self.prevData addObject:self.data];
-    self.data=item;
-    
-    //  [self saveChecklistItems];
-    
+    DataModelTree *item=self.data.children[indexPath.row];
+    if(item.checked>0){
+        item.checked=-1;
+    }else{
+        item.checked=0-3-item.checked;
+    }
+    ((DataModelTree *)self.data.children[indexPath.row]).checked=item.checked;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [tableView reloadData];
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    DataModelTree *item = self.data.children[indexPath.row];
+    if ([item.children count]!=0) {
+        [self.prevData addObject:self.data];
+        self.data=item;
+        self.title=self.data.name;
+        [tableView reloadData];
+    }
 }
 
 @end

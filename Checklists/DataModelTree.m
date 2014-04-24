@@ -16,6 +16,7 @@
     if (self) {
         self.children = children;
         self.name = name;
+        self.checked=-2;
     }
     return self;
 }

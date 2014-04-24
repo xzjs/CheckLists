@@ -69,21 +69,21 @@
     return documentsDirectory;
 }
 
--(NSString*)dataFilePath{
-    return [[self documentsDirectory]stringByAppendingPathComponent:@"Checklists.plist"];
+-(NSString*)dataFilePath:(NSString*)nssPath{
+    return [[self documentsDirectory]stringByAppendingPathComponent:nssPath];
 }
 
 -(void)saveChecklists{
     NSMutableData *data = [[NSMutableData alloc]init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
     
-    [archiver encodeObject:_lists forKey:@"Checklists"];
+    [archiver encodeObject:_lists forKey:@"ID"];
     [archiver finishEncoding];
-    [data writeToFile:[self dataFilePath] atomically:YES];
+    //[data writeToFile:[self dataFilePath] atomically:YES];
 }
 
 -(void)loadChecklists{
-    NSString *path = [self dataFilePath];
+    /*NSString *path = [self dataFilePath];
     if([[NSFileManager defaultManager]fileExistsAtPath:path]){
         NSData *data = [[NSData alloc]initWithContentsOfFile:path];
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
@@ -93,7 +93,7 @@
         [unarchiver finishDecoding];
     }else{
         self.lists = [[NSMutableArray alloc]initWithCapacity:20];
-    }
+    }*/
 }
 
 
@@ -147,6 +147,68 @@
         [maChild addObject:phone1];
     }
     return maChild;
+}
+
+-(void)saveIDNumber:(NSString*)nss{
+    NSMutableData *data = [[NSMutableData alloc]init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+    
+    [archiver encodeObject:nss forKey:@"ID"];
+    [archiver finishEncoding];
+    [data writeToFile:[self dataFilePath:@"IDNumber.plist"] atomically:YES];
+}
+
+-(NSString*)loadIDNumber{
+    NSString *path = [self dataFilePath:@"IDNumber.plist"];
+    if([[NSFileManager defaultManager]fileExistsAtPath:path]){
+        NSData *data = [[NSData alloc]initWithContentsOfFile:path];
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
+        
+        //self.lists = [unarchiver decodeObjectForKey:@"Checklists"];
+        NSString* nss=[unarchiver decodeObjectForKey:@"ID"];
+        return nss;
+        
+        [unarchiver finishDecoding];
+    }else{
+        return nil;
+    }
+}
+
+-(NSMutableDictionary*)getNewsOnInternet:(NSString*)nssIDNumber{
+    NSError *error;
+    //加载一个NSURL对象
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://oucfeed.duapp.com/news/%@",nssIDNumber]]];
+    //将请求的url数据放到NSData对象中
+    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    //IOS5自带解析类NSJSONSerialization从response中解析出数据放到字典中
+    NSMutableDictionary *weatherDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
+    
+    return weatherDic;
+}
+
+-(void)saveNews:(NSMutableArray *)nsma{
+    NSMutableData *data = [[NSMutableData alloc]init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+    
+    [archiver encodeObject:nsma forKey:@"News"];
+    [archiver finishEncoding];
+    [data writeToFile:[self dataFilePath:@"News.plist"] atomically:YES];
+}
+
+-(NSMutableArray*)loadNews{
+    NSString *path = [self dataFilePath:@"News.plist"];
+    if([[NSFileManager defaultManager]fileExistsAtPath:path]){
+        NSData *data = [[NSData alloc]initWithContentsOfFile:path];
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
+        
+        //self.lists = [unarchiver decodeObjectForKey:@"Checklists"];
+        NSMutableArray* nsma=[unarchiver decodeObjectForKey:@"News"];
+        return nsma;
+        
+        [unarchiver finishDecoding];
+    }else{
+        return nil;
+    }
 }
 
 @end
