@@ -38,13 +38,13 @@
     NSString *hostName=@"http://oucfeed.duapp.com/category";
     Reachability * rea=[Reachability reachabilityWithHostName:hostName];
     NetworkStatus nws=[rea currentReachabilityStatus];
-    if (nws==NotReachable) {
+    /*if (nws==NotReachable) {
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"网络不可用" message:@"当前网络不可用，无法加载列表" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:nil ,nil];
         [alert show];
         id someThing;
         [self cancel:someThing];
         return ;
-    }
+    }*/
     if ((self.prevData==nil)||([self.prevData count]==0)) {
         self.prevData=[[NSMutableArray alloc]init];
         self.data=[[DataModelTree alloc]init];
@@ -81,6 +81,8 @@
     
     DataModel *dm=[[DataModel alloc]init];
     [dm saveIDNumber:ns];
+    Checklist *c=[[Checklist alloc]init];
+    [self.delegate listDetailViewController:self didFinishEditingChecklist:c];
 }
 
 //向服务器发送请求从网络获取数据并返回获取到得字典

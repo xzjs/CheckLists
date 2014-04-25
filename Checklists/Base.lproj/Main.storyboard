@@ -52,7 +52,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Checklist Name" id="h5e-G3-ded">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="CLY-xX-KR5"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="CLY-xX-KR5">
+                            <connections>
+                                <action selector="Collect:" destination="3tK-fc-qed" id="rnU-Ay-xCl"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="webView" destination="b9N-mg-tkZ" id="ZCT-dr-3iM"/>

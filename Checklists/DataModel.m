@@ -211,4 +211,30 @@
     }
 }
 
+//保存收藏的新闻
+-(void)saveCollectNews:(NSMutableArray *)nsma{
+    NSMutableData *data = [[NSMutableData alloc]init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+    
+    [archiver encodeObject:nsma forKey:@"Collect"];
+    [archiver finishEncoding];
+    [data writeToFile:[self dataFilePath:@"Collect.plist"] atomically:YES];
+}
+
+//加载收藏的新闻
+-(NSMutableArray*)loadCollectNews{
+    NSString *path = [self dataFilePath:@"Collect.plist"];
+    if([[NSFileManager defaultManager]fileExistsAtPath:path]){
+        NSData *data = [[NSData alloc]initWithContentsOfFile:path];
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
+        
+        //self.lists = [unarchiver decodeObjectForKey:@"Checklists"];
+        NSMutableArray* nsma=[unarchiver decodeObjectForKey:@"Collect"];
+        return nsma;
+        
+        [unarchiver finishDecoding];
+    }else{
+        return nil;
+    }
+}
 @end

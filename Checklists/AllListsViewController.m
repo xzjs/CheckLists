@@ -32,19 +32,14 @@
     NSString *hostName=@"http://oucfeed.duapp.com/category";
     Reachability * rea=[Reachability reachabilityWithHostName:hostName];
     NetworkStatus nws=[rea currentReachabilityStatus];
-    if (nws==NotReachable) {
+    /*if (nws==NotReachable) {
         DataModel *dm=[[DataModel alloc]init];
         self.nsmaObject=[dm loadNews];
-    }else{
+    }else{*/
         [self loadNews];
         DataModel *dm=[[DataModel alloc]init];
         [dm saveNews:self.nsmaObject];
-    }
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //}
 }
 
 - (void)didReceiveMemoryWarning
@@ -138,9 +133,9 @@
 
 - (void)listDetailViewController:(ListDetailViewController *)controller didFinishAddingChecklist:(Checklist *)checklist
 {
-  [self.dataModel.lists addObject:checklist];
+  //[self.dataModel.lists addObject:checklist];
 
-    [self.dataModel sortChecklists];
+    //[self.dataModel sortChecklists];
   [self.tableView reloadData];
 
   [self dismissViewControllerAnimated:YES completion:nil];
@@ -148,8 +143,8 @@
 
 - (void)listDetailViewController:(ListDetailViewController *)controller didFinishEditingChecklist:(Checklist *)checklist
 {
-    [self.dataModel sortChecklists];
-    [self.tableView reloadData];
+    //[self.dataModel sortChecklists];
+    [self loadNews];
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 

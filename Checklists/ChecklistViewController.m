@@ -85,4 +85,6 @@
   }*/
 }
 
+- (IBAction)Collect:(id)sender {
+}
 @end
