@@ -29,16 +29,31 @@
 {
     [super viewDidLoad];
 
-    NSString *hostName=@"http://oucfeed.duapp.com/category";
+    /*NSString *hostName=@"http://oucfeed.duapp.com/category";
     Reachability * rea=[Reachability reachabilityWithHostName:hostName];
     NetworkStatus nws=[rea currentReachabilityStatus];
-    /*if (nws==NotReachable) {
+    if (nws==NotReachable) {
         DataModel *dm=[[DataModel alloc]init];
         self.nsmaObject=[dm loadNews];
     }else{*/
+    NSArray * nsaCopy=self.nsmaObject.copy;
         [self loadNews];
+    
         DataModel *dm=[[DataModel alloc]init];
         [dm saveNews:self.nsmaObject];
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_async(queue, ^{
+        NSTimer *timer =  [NSTimer scheduledTimerWithTimeInterval:86400 target:self selector:@selector(loadNews) userInfo:nil repeats:YES];
+        if ([self.nsmaObject isEqualToArray:nsaCopy]==NO) {
+            UILocalNotification * uiln=[[UILocalNotification alloc]init];
+            uiln.fireDate=[NSDate new];
+            uiln.timeZone=[NSTimeZone defaultTimeZone];
+            uiln.alertBody=@"您有新的新闻未阅读";
+            uiln.soundName=UILocalNotificationDefaultSoundName;
+            [[UIApplication sharedApplication]scheduleLocalNotification:uiln];
+        }
+    });
     //}
 }
 
@@ -80,8 +95,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  //return [self.dataModel.lists count];
-    return [self.newsMDic count];
+    if (self.clas==0) {
+        return [self.newsMDic count];
+    }else{
+        return [self.nsmaObject count];
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,10 +126,13 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  [self.dataModel.lists removeObjectAtIndex:indexPath.row];
-
-  NSArray *indexPaths = @[indexPath];
-  [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    if (self.clas==1) {
+        [self.nsmaObject removeObjectAtIndex:indexPath.row];
+        DataModel *dm=[[DataModel alloc]init];
+        [dm saveCollectNews:self.nsmaObject];
+        NSArray *indexPaths = @[indexPath];
+        [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -133,9 +155,6 @@
 
 - (void)listDetailViewController:(ListDetailViewController *)controller didFinishAddingChecklist:(Checklist *)checklist
 {
-  //[self.dataModel.lists addObject:checklist];
-
-    //[self.dataModel sortChecklists];
   [self.tableView reloadData];
 
   [self dismissViewControllerAnimated:YES completion:nil];
@@ -167,14 +186,33 @@
 }
 
 -(void)loadNews{
+    UIActivityIndicatorView* activityIndicatorView = [ [ UIActivityIndicatorView  alloc ]initWithFrame:CGRectMake(150.0,200.0,30.0,30.0)];
+    activityIndicatorView.activityIndicatorViewStyle= UIActivityIndicatorViewStyleGray;
+    activityIndicatorView.hidesWhenStopped = NO	;
+    [self.view addSubview:activityIndicatorView ];
+    [activityIndicatorView startAnimating];
+    //[self.aiv startAnimating];
     self.newsMDic=[[NSMutableDictionary alloc]init];
     DataModel *dm=[[DataModel alloc]init];
-    self.newsMDic=[dm getNewsOnInternet:dm.loadIDNumber];
     self.nsmaObject=[[NSMutableArray alloc]init];
-    for (NSDictionary *nsd in self.newsMDic) {
-        [self.nsmaObject addObject:nsd];
+    if(self.clas==0){
+        self.newsMDic=[dm getNewsOnInternet:dm.loadIDNumber];
+    
+        for (NSDictionary *nsd in self.newsMDic) {
+            [self.nsmaObject addObject:nsd];
+        }
+    }else{
+        self.nsmaObject=[dm loadCollectNews];
     }
-    //self.nsa=[self.newsMDic allKeys];
+    //[self.aiv stopAnimating];
+    [activityIndicatorView stopAnimating];
     [self.tableView reloadData];
+}
+- (IBAction)zuixin:(id)sender {
+    UISegmentedControl *seg=(UISegmentedControl*)sender;
+    self.clas = seg.selectedSegmentIndex;
+    [self loadNews];
+    [self.tableView reloadData];
+    
 }
 @end

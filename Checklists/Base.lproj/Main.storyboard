@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--All Lists View Controller - 最新消息-->
+        <!--All Lists View Controller-->
         <scene sceneID="yIF-eh-CN8">
             <objects>
                 <tableViewController id="UAC-Rq-6QX" customClass="AllListsViewController" sceneMemberID="viewController">
@@ -17,7 +17,19 @@
                             <outlet property="delegate" destination="UAC-Rq-6QX" id="6bl-Jo-nOG"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="最新消息" id="QoY-f6-rOn">
+                    <navigationItem key="navigationItem" id="QoY-f6-rOn">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Kd9-Qu-ppe">
+                            <rect key="frame" x="94" y="7" width="133" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="最新消息"/>
+                                <segment title="收藏消息"/>
+                            </segments>
+                            <connections>
+                                <action selector="zuixin:" destination="UAC-Rq-6QX" eventType="valueChanged" id="meH-4C-ozX"/>
+                            </connections>
+                        </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="gdw-40-TMq">
                             <connections>
                                 <segue destination="WwQ-He-y4D" kind="modal" identifier="AddChecklist" id="YOK-4g-6Bs"/>

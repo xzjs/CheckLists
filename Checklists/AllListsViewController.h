@@ -15,5 +15,8 @@
 }
 
 @property(nonatomic,strong)DataModel *dataModel;
+@property(nonatomic,assign)NSInteger clas;
+- (IBAction)zuixin:(id)sender;
+
 
 @end

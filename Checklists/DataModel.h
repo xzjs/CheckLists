@@ -24,5 +24,7 @@
 -(NSMutableDictionary*)getNewsOnInternet:(NSString*)nssIDNumber;
 -(void)saveNews:(NSMutableArray*) nsma;
 -(NSMutableArray*)loadNews;
+-(void)saveCollectNews:(NSMutableArray *)nsma;
+-(NSMutableArray*)loadCollectNews;
 
 @end

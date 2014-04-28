@@ -9,6 +9,7 @@
 #import "ChecklistViewController.h"
 #import "ChecklistItem.h"
 #import "Checklist.h"
+#import "DataModel.h"
 
 @interface ChecklistViewController ()
 
@@ -86,5 +87,10 @@
 }
 
 - (IBAction)Collect:(id)sender {
+    DataModel *dm=[[DataModel alloc]init];
+    NSMutableArray * nsma=[dm loadCollectNews];
+    nsma = [[NSMutableArray alloc]init];
+    [nsma addObject:self.nsd];
+    [dm saveCollectNews:nsma];
 }
 @end
