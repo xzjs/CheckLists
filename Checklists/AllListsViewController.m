@@ -186,11 +186,11 @@
 }
 
 -(void)loadNews{
-    UIActivityIndicatorView* activityIndicatorView = [ [ UIActivityIndicatorView  alloc ]initWithFrame:CGRectMake(150.0,200.0,30.0,30.0)];
+    /*UIActivityIndicatorView* activityIndicatorView = [ [ UIActivityIndicatorView  alloc ]initWithFrame:CGRectMake(150.0,200.0,30.0,30.0)];
     activityIndicatorView.activityIndicatorViewStyle= UIActivityIndicatorViewStyleGray;
     activityIndicatorView.hidesWhenStopped = NO	;
     [self.view addSubview:activityIndicatorView ];
-    [activityIndicatorView startAnimating];
+    [activityIndicatorView startAnimating];*/
     //[self.aiv startAnimating];
     self.newsMDic=[[NSMutableDictionary alloc]init];
     DataModel *dm=[[DataModel alloc]init];
@@ -205,7 +205,7 @@
         self.nsmaObject=[dm loadCollectNews];
     }
     //[self.aiv stopAnimating];
-    [activityIndicatorView stopAnimating];
+    //[activityIndicatorView stopAnimating];
     [self.tableView reloadData];
 }
 - (IBAction)zuixin:(id)sender {
